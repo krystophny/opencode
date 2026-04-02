@@ -34,7 +34,11 @@ export namespace Server {
     return false
   }
 
-  export const Default = lazy(() => ControlPlaneRoutes())
+  function wrap(app: Hono) {
+    return Object.assign(app, { app })
+  }
+
+  export const Default = lazy(() => wrap(ControlPlaneRoutes()))
 
   export const ControlPlaneRoutes = (opts?: { cors?: string[] }): Hono => {
     const app = new Hono()
